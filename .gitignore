@@ -1,0 +1,4 @@
+#Ignore all files having .exe extension
+*.exe
+
+.vscode
