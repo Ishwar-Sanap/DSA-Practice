@@ -6,20 +6,21 @@ int lowerBound(vector<int>&arr, int target)
 {
     int n = arr.size();
     int low = 0, high = n-1;
-    int ans = -1;
+    int ans = n; // assinged ans to n since if we not found any element less or equal to target
     while(low <= high)
     {
         int mid = low + (high - low)/2;
 
-        if(target > arr[mid])
-            low = mid + 1;
-        
-        else if(target <= arr[mid])
+        if(arr[mid] >= target)
         {
-            // Since target is less than or equal to mid, mid can be answer but 
+            // Since arr[mid] is greter than or equal to target, mid can be answer but 
             // search in left part for better answer
             ans = mid;
             high = mid-1;
+        }
+        else 
+        {
+            low = mid + 1;
         }
     }
     // return low ;  //without ans varible our result is present in low
@@ -32,20 +33,21 @@ int UpperBound(vector<int>&arr, int target)
 {
     int n = arr.size();
     int low = 0, high = n-1;
-    int ans = -1;
+    int ans = n;    // assinged ans to n since if we not found any element less  to target
     while(low <= high)
     {
         int mid = low + (high - low)/2;
 
-        if(target >= arr[mid])
-            low = mid+1;
-
-        else if(target < arr[mid])
+         if(arr[mid] > target)
         {
-            // since target is less than mid, mid can be answer but 
+            // Since arr[mid] is strictly greter than  target, mid can be answer but 
             // search in left part for better answer
             ans = mid;
             high = mid-1;
+        }
+        else 
+        {
+            low = mid + 1;
         }
     }
     // return low ;  //without ans varible our result is present in low
@@ -55,12 +57,15 @@ int UpperBound(vector<int>&arr, int target)
 int main()
 {
     vector<int> arr{2, 3, 7, 10, 11, 11, 25};
-    // cout<<UpperBound(arr,11)<<endl;
+    cout<<UpperBound(arr,11)<<endl; // 6
+    // cout<<UpperBound(arr,26)<<endl; // 7
 
     // inbuilt function.
-    // auto it =  upper_bound(arr.begin(), arr.end(), 11);
+    auto it1 =  upper_bound(arr.begin(), arr.end(), 26);
     auto it =  lower_bound(arr.begin(), arr.end(), 11);
-    int index = it - arr.begin();
+    auto it2 =  lower_bound(arr.begin(), arr.end(), 26);
+    // cout<<lowerBound(arr,26)<<endl;
+    int index = it1 - arr.begin();
     cout<<index<<endl;
     return 0;
 }
