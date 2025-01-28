@@ -19,6 +19,7 @@ vector<int> nextLargerElement(vector<int> &arr)
     stack<int> st;
 
     // iterating from Right to left since we want largest element store at top of stack..
+    // Monotonically Decresing stack.
     int i = n - 1;
     while (i >= 0)
     {
