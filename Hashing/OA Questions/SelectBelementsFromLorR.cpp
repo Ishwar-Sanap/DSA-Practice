@@ -14,91 +14,36 @@ output : 8
 
 4 5 8 1 2 5 4 1 3 2 10
 */
-
-int maxSum(vector<int>arr , int B)
-{
-    int n = arr.size();
-    int totalSum = 0;
-    int maxSum = INT_MIN;
-
-    unordered_map<int,int>preFixSum;
-    for(int i = 0; i<n; i++)
-    {
-        totalSum += arr[i];
-        preFixSum[i] = totalSum;
-    }
-
-    //You can choose some element from front and some from back, but some should be maximum
-    for(int i = 0; i<n; i++) //[5, -2, 3, 1, 2], 3
-    {
-        int leftSum = INT_MIN, rightSum = INT_MIN;
-        if(i < B) // we can choose[1 to B] elements from left and remaining from right
-        {
-            leftSum = preFixSum[i];
-            int indx = (n - B + i); // from this index we can pick right elements
-           
-            if(preFixSum.find(indx) != preFixSum.end())
-            {
-                rightSum = totalSum - preFixSum[indx];
-           
-            }
-
-            if(rightSum != INT_MIN)
-                maxSum = max(maxSum , leftSum+rightSum);
-            else
-                maxSum = max(maxSum,leftSum);
-        }
-        
-        if(B>= (n-i)) // we can choose [B to 1] element from right and remaining from left
-        {
-            leftSum = INT_MIN, rightSum = INT_MIN;
-            rightSum = totalSum - preFixSum[i-1];
-
-            int indx = (B -(n - i))-1;
-            if(preFixSum.find(indx) != preFixSum.end())
-            {
-                leftSum = preFixSum[indx];
-            }
-
-            if(leftSum != INT_MIN)
-                maxSum = max(maxSum , leftSum+rightSum);
-            else
-                maxSum = max(maxSum,rightSum);
-
-        }
-    }
-    return maxSum;
-
-}
-
-int approch2(vector<int>arr, int B)
+int getMaxSum(vector<int> arr, int B)
 {
     int n = arr.size();
     int totalSum = 0;
     int prefixSum = 0;
 
-    unordered_map<int,int>suFixSum;
-    suFixSum[n-1] = arr[n-1];
-    for(int i = 1; i<n; i++)
+    vector<int> suFixSum(n, 0);
+    // right to left sum
+    for (int i = n - 1; i >= 0; i--)
     {
-        suFixSum[n-i-1] = suFixSum[n-i-1]+suFixSum[n-i];
+        suFixSum[i] = (i + 1) < n ? (suFixSum[i + 1] + arr[i]) : arr[i];
     }
 
-    int maxSum = suFixSum[n-B]; // Initilized maxSum with right picked elements
-    for(int i  = 0; i<B; i++)
-    {   
+    int maxSum = suFixSum[n - B]; // Initilized maxSum with right picked elements
+
+    for (int i = 0; i < B; i++)
+    {
         prefixSum += arr[i];
         int indx = (n - B + i + 1); // from this index we can pick right elements
-        
-        maxSum = max( maxSum , prefixSum+suFixSum[indx]);
-        
+
+        if (indx < n)
+            maxSum = max(maxSum, prefixSum + suFixSum[indx]);
     }
+
     return maxSum;
 }
 int main()
 {
-    vector<int>arr = {4 ,5 ,8 ,1 ,2 ,5, 4, 1, 3 ,2, 10};
+    vector<int> arr = {4, 5, 8, 1, 2, -2, 10};
     int B = 3;
-    cout<<approch2(arr,B)<<endl;
+    cout << getMaxSum(arr, B) << endl;
     return 0;
 }

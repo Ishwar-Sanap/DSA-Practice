@@ -31,9 +31,10 @@ string getPartyTime(vector<vector<string>>&Timing , int k)
         preFixSum[R+1] = preFixSum[R+1]-1;
     }
 
-    for(int i = 1; i<preFixSum.size(); i++)
+    // party can be start from 0:0 if there is free slot available..
+    for(int i = 0; i<preFixSum.size(); i++)
     {
-        preFixSum[i] = preFixSum[i-1]+preFixSum[i];
+        preFixSum[i] = i > 0 ? preFixSum[i-1]+preFixSum[i] : preFixSum[i];
         
         if(preFixSum[i] == 0)
         {
@@ -61,6 +62,7 @@ string getPartyTime(vector<vector<string>>&Timing , int k)
 int main()
 {
     vector<vector<string>>Timing = { {"00:00","05:00"},{"05:25","10:00"}, {"11:00","12:00"}};
+    // vector<vector<string>>Timing = { {"00:31","05:00"},{"05:25","10:00"}, {"11:00","12:00"}};
     int k = 30;
     
     cout<<getPartyTime(Timing , k)<<endl;

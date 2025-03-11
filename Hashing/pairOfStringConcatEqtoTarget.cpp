@@ -32,9 +32,8 @@ int numOfPairs(vector<string> &nums, string target)
         if (prefix.length() >= target.length())
             continue;
 
-        string suffix = target.substr(n);
-
-        if (prefix == target.substr(0, n))
+        string suffix = target.substr(n); // start from nth index to end of the target string
+        if (prefix == target.substr(0, n)) // prefix is mathcing with the target prefix part
         {
             if (mp.find(suffix) != mp.end())
             {
@@ -50,6 +49,9 @@ int numOfPairs(vector<string> &nums, string target)
 }
 int main()
 {
+    vector<string> num = {"12" , "13" , "1" , "213" , "12" , "31"};
+    cout<<numOfPairs(num, "1213")<<endl;
+
 
     return 0;
 }

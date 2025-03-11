@@ -1,50 +1,45 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Approach1
+// Approach1 using map
 int longestPalindrome(vector<string> &words)
 {
-
-    int unpaired = 0;
+    int ans = 0;
     unordered_map<string, int> mp;
-    int n = words.size();
-
-    for (string str : words)
-        mp[str]++; // storing each word and it's frequency
-
-    int longestLen = 0;
-    for (int i = 0; i < n; i++)
+    for (string word : words)
     {
-        string str = words[i];
-        string req = str;
-        reverse(req.begin(), req.end());
+        string flipped = {word[1], word[0]};
 
-        if (mp.find(req) != mp.end())
+        if (mp.find(flipped) != mp.end())
         {
-            int pairs = min(mp[str], mp[req]);
-            if (str == req) // string : gg gg gg
-            {
-                if (mp[str] % 2 == 1)
-                {
-                    unpaired = 1; // gg
-                    pairs--;
-                }
-                longestLen += 2 * pairs;
-            }
-            else // in string you found lc cl lc cl (i.e 2 pairs)
-                longestLen += 4 * pairs;
+            ans += 4;
 
-            mp.erase(str);
+            mp[flipped]--;
+
+            if (mp[flipped] == 0)
+                mp.erase(flipped);
+        }
+        else
+        {
+            mp[word]++;
         }
     }
 
-    if (unpaired)
-        longestLen += 2;
+    // For the odd word in the center of the palindrome (e.g. "aa", "bb", "cc", etc.),
+    for (auto it : mp)
+    {
+        string word = it.first;
+        if (word[0] == word[1])
+        {
+            ans += 2;
+            break;
+        }
+    }
 
-    return longestLen;
+    return ans;
 }
 
-// Approch 2
+// Approch 2 using, 2D array to store frequencies
 int longestPalindrome2(vector<string> &words)
 {
     // As there are only 2 lowercase English letters in each word, we can represent the word using a
