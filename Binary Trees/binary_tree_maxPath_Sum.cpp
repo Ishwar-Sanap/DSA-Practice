@@ -12,8 +12,8 @@ struct TreeNode
 };
 
 /*-
- We have to maintain the max path sum through out the recursive calls, and also required to return the maximum path sum from either 
-the left side or right side, by including the root, 
+ We have to maintain the max path sum through out the recursive calls, and also required to return the maximum path sum from either
+the left side or right side, by including the root,
 
 */
 int getMaxPathSum(TreeNode *root, int &pathSum)
@@ -24,10 +24,10 @@ int getMaxPathSum(TreeNode *root, int &pathSum)
     int leftSum = getMaxPathSum(root->left, pathSum);
     int rightSum = getMaxPathSum(root->right, pathSum);
 
-    int currPathSum_one_side = max(leftSum, rightSum) + root->val;
-    pathSum = max({pathSum, currPathSum_one_side, (leftSum + rightSum + root->val), root->val});
+    int currPathSum_one_side = max({leftSum + root->val, rightSum + root->val, root->val});
+    pathSum = max({pathSum, currPathSum_one_side, (leftSum + rightSum + root->val)});
 
-    return max(currPathSum_one_side, root->val);
+    return currPathSum_one_side;
 }
 int maxPathSum(TreeNode *root)
 {
