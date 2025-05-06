@@ -8,7 +8,7 @@ using namespace std;
     // [1,1,2,1,3]  k = 2
     // [1 1]  [1 1 2] [1 2 1] [2 1 3] [1 3]
 
-    // 2 4 6 1 3 5 6 7 k = 2
+    // 2 4 6 1 3 5 6 7 k = 1
     // output 9
 
 Given an array of integers nums and an integer k. A continuous subarray is called nice if there are k odd numbers on it.
@@ -56,6 +56,7 @@ int numberOfSubarrays(vector<int> &nums, int k)
 
 int main()
 {
-
+    vector<int>arr = {2 ,4, 6, 1, 3, 5, 6,7};
+    cout<<numberOfSubarrays(arr,1)<<endl; // 9 Nice Subarray
     return 0;
 }
