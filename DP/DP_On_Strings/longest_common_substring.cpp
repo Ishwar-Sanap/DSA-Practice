@@ -1,13 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//https://www.geeksforgeeks.org/problems/longest-common-substring1452/1
+// https://www.geeksforgeeks.org/problems/longest-common-substring1452/1
 /*
 Input: s1 = "ABCDGH", s2 = "ACDGHR"
 Output: 4
 Explanation: The longest common substring is "CDGH" with a length of 4.
 
 */
+// Finding the Longest length of Common substring
+int tryAllWays(int i, int j, int cnt, string &s1, string &s2)
+{
+    if (i < 0 || j < 0)
+        return cnt;
+
+    // match
+    if (s1[i] == s2[j])
+        return tryAllWays(i - 1, j - 1, cnt + 1, s1, s2);
+
+
+    // not match
+    int op1 = tryAllWays(i - 1, j, 0, s1, s2);
+    int op2 = tryAllWays(i, j - 1, 0, s1, s2);
+    return max({cnt, op1, op2});
+}
+
 string longestCommonSubstr(string &s1, string &s2)
 {
     // your code here
@@ -31,8 +48,8 @@ string longestCommonSubstr(string &s1, string &s2)
             {
                 indx1 = i;
                 indx2 = j;
-                maxLen = dp[i][j]; 
-            }    
+                maxLen = dp[i][j];
+            }
         }
     }
 
@@ -59,7 +76,8 @@ string longestCommonSubstr(string &s1, string &s2)
 int main()
 {
 
-    string s1 = "ABCDGH", s2 = "ACDGHR";
+    string s1 = "ABCDGHAR", s2 = "ACDGHR";
+    // cout<<tryAllWays(s1.size()-1, s2.size()-1, 0, s1,s2);
     cout << longestCommonSubstr(s1, s2) << endl;
     return 0;
 }
