@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//https://www.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1
+
 bool dfs(int source, vector<vector<int>> &adjList, vector<int> &visited, vector<int> &pathVisied)
 {
     visited[source] = 1;
