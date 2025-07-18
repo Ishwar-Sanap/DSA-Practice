@@ -2,8 +2,8 @@
 using namespace std;
 
 /*
-T.C --> O(V+E log V) , E --> no of edges , V --> no fo vertices
-S.C --> O(V)
+T.C --> O(E log V) , E --> no of edges , V --> no fo vertices
+S.C --> O(E+V)
 */
 
 // https://www.geeksforgeeks.org/problems/implementing-dijkstra-set-1-adjacency-matrix/1
